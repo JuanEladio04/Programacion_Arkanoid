@@ -1,94 +1,87 @@
 package gameArkanoid.objects;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Arrays;
 
-public class Ladrillo {
+public class Ladrillo extends Actor {
 	//Propiedades del objeto
+	private int alto, ancho;
+	public static String BRICK_IMAGE = "brik.png";
 	
-	private int x, y, ancho, alto, puntosVida;
-	private static String COLOR[] = new String [] {"RED", "GREEN", "BLUE"}; 
-
 	//Metodos del objeto
-	
+
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(Color.YELLOW);
+		g.fillRect(this.x, this.y, this.ancho, this.alto);		
+	}
+
+	@Override
+	public void actua() {
+		
+	}
+
 	/**
-	 * Método constructor por defecto
+	 * Constructor por defecto
 	 */
 	public Ladrillo() {
 		super();
 	}
 
-	/**
-	 * @param x
-	 * @param y
-	 * @param ancho
-	 * @param alto
-	 * @param puntosVida
-	 * @param COLOR
+	/*
+	 * Constructor avanzado
 	 */
-	public Ladrillo(int x, int y, int ancho, int alto, int puntosVida, String[] COLOR) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.ancho = ancho;
-		this.alto = alto;
-		this.puntosVida = puntosVida;
-		this.COLOR = COLOR;
+	public Ladrillo(int x, int y, String BRICK_IMAGE) {
+		super(x, y, BRICK_IMAGE);
+
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getAncho() {
-		return ancho;
-	}
-
-	public void setAncho(int ancho) {
-		this.ancho = ancho;
-	}
-
+	/**
+	 * @return the alto
+	 */
 	public int getAlto() {
 		return alto;
 	}
 
+	/**
+	 * @param alto the alto to set
+	 */
 	public void setAlto(int alto) {
 		this.alto = alto;
 	}
 
-	public int getPuntosVida() {
-		return puntosVida;
+	/**
+	 * @return the ancho
+	 */
+	public int getAncho() {
+		return ancho;
 	}
 
-	public void setPuntosVida(int puntosVida) {
-		this.puntosVida = puntosVida;
+	/**
+	 * @param ancho the ancho to set
+	 */
+	public void setAncho(int ancho) {
+		this.ancho = ancho;
 	}
 
-	public String[] getCOLOR() {
-		return COLOR;
+	/**
+	 * @return the BRICK_IMAGE
+	 */
+	public static String getBRICK_IMAGE() {
+		return BRICK_IMAGE;
 	}
 
-	public void setCOLOR(String[] COLOR) {
-		this.COLOR = COLOR;
+	/**
+	 * @param BRICK_IMAGE the BRICK_IMAGE to set
+	 */
+	public static void setBRICK_IMAGE(String BRICK_IMAGE) {
+		BRICK_IMAGE = BRICK_IMAGE;
 	}
 
 	@Override
 	public String toString() {
-		return "Ladrillo [x=" + x + ", y=" + y + ", ancho=" + ancho + ", alto=" + alto + ", puntosVida=" + puntosVida
-				+ ", COLOR=" + Arrays.toString(COLOR) + "]";
+		return "Ladrillo [alto=" + alto + ", ancho=" + ancho + "]";
 	}
-	
-	
 	
 }

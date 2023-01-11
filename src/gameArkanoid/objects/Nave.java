@@ -1,64 +1,50 @@
 package gameArkanoid.objects;
 
-public class Nave {
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Nave extends Actor {
 	//Propiedades del objeto
-	
-	private int x, y;
+	public static String SHIP_IMAGE = "ship.png";
 
 	//Métodos del objeto
 
 	/**
-	 * 
+	 * Esto nos servira para pintar el jugador en la escena y determinar su comportamiento.
+	 */
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(Color.RED);
+		g.fillRect(this.x, this.y, this.ancho, this.alto);
+	}
+
+	@Override
+	public void actua() {
+		
+	}
+	
+	/**
+	 * Constructor por defecto "default constructor"
 	 */
 	public Nave() {
 		super();
 	}
 
 	/**
+	 * Constructor que inicializa las propiedades del objeto
 	 * @param x
 	 * @param y
+	 * @param img
 	 */
-	public Nave(int x, int y) {
-		super();
-		this.x = x;
-		this.y = y;
+	public Nave(int x, int y, String img) {
+		super(x, y, img);
 	}
 
 	/**
-	 * @return the x
+	 * Obtención de un String con todos los datos de un objeto Nave
 	 */
-	public int getX() {
-		return x;
-	}
-
-	/**
-	 * @param x the x to set
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public int getY() {
-		return y;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	@Override
 	public String toString() {
-		return "Nave [x=" + x + ", y=" + y + "]";
+		return "Nave [getX()=" + getX() + ", getY()=" + getY() + ", getImg()=" + getImg() + "]";
 	}
-	
-	
-	
-
 
 }
