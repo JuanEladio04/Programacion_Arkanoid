@@ -65,17 +65,43 @@ public class Main {
 		Nave nave = new Nave(175, 600, Nave.SHIP_IMAGE);
 		actores.add(nave);
 		//Añadimos la pelota
-		Pelota ball = new Pelota(nave.getX(), nave.getY() - 50, Pelota.BALL_IMAGE);
+		Pelota ball = new Pelota(200, nave.getY() - 50, Pelota.BALL_IMAGE);
 		actores.add(ball);
 		
 		//Luego creamos los diferentes ladrillos del juego
-		List<Ladrillo> ladrillos = new ArrayList<Ladrillo>();
-		for(int i = 0; i < 72; i++) {
-			Ladrillo ladrillo  = new Ladrillo(10, 10, Ladrillo.BRICK_IMAGE);
-			actores.add(ladrillo);
+		List<Ladrillo> ladrillos = creaYColocaLadrillos();
+		for (Ladrillo brick : ladrillos) {
+			actores.add(brick);
 		}
 		
 		return actores;
+	}
+	
+	public static List<Ladrillo> creaYColocaLadrillos() {
+		List<Ladrillo> bricks = new ArrayList<Ladrillo>();
+		int y = 10, x = 10;
+
+		for(int i = 0, j = 0; i < 72; i++, j++) {
+			if(j == 12) { //Creamos un if que haga que cada 6 bloques bajemos una posición
+				y = bricks.get(i - 1).getY() + bricks.get(i - 1).getAlto();
+				x = 10; //Devolvemos la x a su posición inicial
+				j = 0;
+			}
+			else { //En caso de la que sea el primer ladrillo no aplicaremos el incremento a la x.
+				if ( i != 0) x = ((bricks.get(i - 1).getX()) + bricks.get(i - 1).getAncho()) + 7;
+
+			}
+
+			if(i == 0) { //Configuramos el primer ladrillo
+				Ladrillo brick = new Ladrillo(x, y, Ladrillo.BRICK_IMAGE);
+				bricks.add(brick);
+			}
+			else { // Configuramos el resto de ladrillos
+				Ladrillo brick = new Ladrillo(x, y, Ladrillo.BRICK_IMAGE);
+				bricks.add(brick);
+			}
+		}
+		return bricks;
 	}
 
 }

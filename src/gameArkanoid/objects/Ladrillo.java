@@ -13,7 +13,7 @@ public class Ladrillo extends Actor {
 	@Override
 	public void paint(Graphics g) {
 		alto = 20;
-		ancho = 70;
+		ancho = 30;
 		g.setColor(Color.YELLOW);
 		g.fillRect(this.x, this.y, ancho, alto);		
 	}
@@ -34,7 +34,7 @@ public class Ladrillo extends Actor {
 	 * Constructor avanzado
 	 */
 	public Ladrillo(int x, int y, String BRICK_IMAGE) {
-		super(x, y, BRICK_IMAGE);
+		super(x, y , BRICK_IMAGE);
 
 	}
 	
