@@ -6,15 +6,16 @@ import java.util.Arrays;
 
 public class Ladrillo extends Actor {
 	//Propiedades del objeto
-	private int alto, ancho;
 	public static String BRICK_IMAGE = "brik.png";
 	
 	//Metodos del objeto
 
 	@Override
 	public void paint(Graphics g) {
+		alto = 20;
+		ancho = 70;
 		g.setColor(Color.YELLOW);
-		g.fillRect(this.x, this.y, this.ancho, this.alto);		
+		g.fillRect(this.x, this.y, ancho, alto);		
 	}
 
 	@Override
@@ -36,35 +37,7 @@ public class Ladrillo extends Actor {
 		super(x, y, BRICK_IMAGE);
 
 	}
-
-	/**
-	 * @return the alto
-	 */
-	public int getAlto() {
-		return alto;
-	}
-
-	/**
-	 * @param alto the alto to set
-	 */
-	public void setAlto(int alto) {
-		this.alto = alto;
-	}
-
-	/**
-	 * @return the ancho
-	 */
-	public int getAncho() {
-		return ancho;
-	}
-
-	/**
-	 * @param ancho the ancho to set
-	 */
-	public void setAncho(int ancho) {
-		this.ancho = ancho;
-	}
-
+	
 	/**
 	 * @return the BRICK_IMAGE
 	 */

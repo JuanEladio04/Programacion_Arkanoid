@@ -32,7 +32,6 @@ public class Main {
 		ventana.setIgnoreRepaint(true);
 		//Hacemos que la ventana sea visible
 		ventana.setVisible(true);
-		
 		//Comenzamos con el juego
 		do {
 			long millisAntesDeProcesarEscena = new Date().getTime();
@@ -43,7 +42,6 @@ public class Main {
 			for (Actor a : actores) {
 				a.actua();
 			}
-			
 			// Calculo los millis que debemos parar el proceso.
 			long millisDespuesDeProcesarEscena = new Date().getTime();
 			int millisDeProcesamientoDeEscena = (int) (millisDespuesDeProcesarEscena - millisAntesDeProcesarEscena);
@@ -64,16 +62,16 @@ public class Main {
 		List<Actor> actores = new ArrayList<Actor>();
 		
 		//Primero debemos añadir al jugador a la lista.
-		Nave nave = new Nave(300, 300, Nave.SHIP_IMAGE);
+		Nave nave = new Nave(175, 600, Nave.SHIP_IMAGE);
 		actores.add(nave);
 		//Añadimos la pelota
-		Pelota ball = new Pelota(200, 200, Pelota.BALL_IMAGE);
+		Pelota ball = new Pelota(nave.getX(), nave.getY() - 50, Pelota.BALL_IMAGE);
 		actores.add(ball);
 		
 		//Luego creamos los diferentes ladrillos del juego
 		List<Ladrillo> ladrillos = new ArrayList<Ladrillo>();
-		for(Ladrillo ladrillo : ladrillos) {
-			ladrillo = new Ladrillo(100, 100, Ladrillo.BRICK_IMAGE);
+		for(int i = 0; i < 72; i++) {
+			Ladrillo ladrillo  = new Ladrillo(10, 10, Ladrillo.BRICK_IMAGE);
 			actores.add(ladrillo);
 		}
 		

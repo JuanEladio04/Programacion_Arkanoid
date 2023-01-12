@@ -14,7 +14,7 @@ public class Nave extends Actor {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(Color.CYAN);
 		g.fillRect(this.x, this.y, this.ancho, this.alto);
 	}
 
@@ -38,6 +38,8 @@ public class Nave extends Actor {
 	 */
 	public Nave(int x, int y, String img) {
 		super(x, y, img);
+		alto = 20;
+		ancho = 80;
 	}
 
 	/**

@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class Pelota extends Actor{
 	//Propiedades del objeto
 
-	private int alto, ancho, velX, velY;
+	private int alto, ancho, velX = -5, velY = -5;
 	public static String BALL_IMAGE = "ball.img";
 
 	@Override
@@ -18,16 +18,16 @@ public class Pelota extends Actor{
 	@Override
 	public void actua() {
 		//Configuramos el movimiento horizontal.
-		this.x += velX;
+		this.x += this.velX;
 		//Añadimos colisiones a las paredes
-		if (this.x < 0 || this.x < 475) {
+		if (this.x < 0 || this.x > 475) {
 			this.velX = - this.velX;
 		}
 		
 		//Configuramos el movimiento horizontal.
-		this.y += velY;
+		this.y += this.velY;
 		//Añadimos colisiones a las paredes
-		if (this.y < 0 || this.y < 750) {
+		if (this.y < 0 || this.y > 750) {
 			this.velY = - this.velY;
 		}
 		
@@ -46,7 +46,8 @@ public class Pelota extends Actor{
 	 */
 	public Pelota(int x, int y, String img) {
 		super(x, y, img);
-
+		ancho = 15;
+		alto = 15;
 	}
 
 	/**
