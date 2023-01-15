@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 public class Ladrillo extends Actor {
 	//Propiedades del objeto
-	public static String BRICK_IMAGE = "brik.png";
+	public static String BRICK_IMAGE = "brick.png";
+	public static Color colors;
 	
 	//Metodos del objeto
 
@@ -14,7 +15,7 @@ public class Ladrillo extends Actor {
 	public void paint(Graphics g) {
 		alto = 20;
 		ancho = 30;
-		g.setColor(Color.YELLOW);
+		g.setColor(colors);
 		g.fillRect(this.x, this.y, ancho, alto);		
 	}
 
@@ -52,9 +53,26 @@ public class Ladrillo extends Actor {
 		BRICK_IMAGE = BRICK_IMAGE;
 	}
 
+	/**
+	 * @return the color
+	 */
+	public static Color getColor() {
+		return colors;
+	}
+
+	/**
+	 * @param color the color to set
+	 */
+	public static void setColor(Color color) {
+		Ladrillo.colors = color;
+	}
+
 	@Override
 	public String toString() {
-		return "Ladrillo [alto=" + alto + ", ancho=" + ancho + "]";
+		return "Ladrillo [x=" + x + ", y=" + y + ", ancho=" + ancho + ", alto=" + alto + ", img=" + img + ", getX()="
+				+ getX() + ", getY()=" + getY() + ", getAncho()=" + getAncho() + ", getAlto()=" + getAlto()
+				+ ", getImg()=" + getImg() + ", toString()=" + super.toString() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + "]";
 	}
 	
 }
