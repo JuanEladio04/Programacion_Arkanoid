@@ -3,6 +3,8 @@ package gameArkanoid.objects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import gameArkanoid.Arkanoid;
+
 public class Pelota extends Actor{
 	//Propiedades del objeto
 
@@ -20,14 +22,14 @@ public class Pelota extends Actor{
 		//Configuramos el movimiento horizontal.
 		this.x += this.velX;
 		//Añadimos colisiones a las paredes
-		if (this.x < 0 || this.x > 475) {
+		if (this.x < 0 || (this.x + this.ancho) > Arkanoid.getInstance().getCanvas().getWidth()) {
 			this.velX = - this.velX;
 		}
 		
 		//Configuramos el movimiento horizontal.
 		this.y += this.velY;
 		//Añadimos colisiones a las paredes
-		if (this.y < 0 || this.y > 750) {
+		if (this.y < 0 || (this.y + this.alto) > Arkanoid.getInstance().getCanvas().getHeight()) {
 			this.velY = - this.velY;
 		}
 		

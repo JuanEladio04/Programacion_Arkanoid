@@ -7,6 +7,8 @@ public abstract class Actor {
 	protected int x, y; //Ubicación del actor en la pantalla
 	protected int ancho = 30, alto = 30; // Lo que ocupa el actor en la pantalla
 	protected String img; // Imagen del actor
+	protected int velocidadX = 0; // Velocidades en cada eje
+	protected int velocidadY = 0;
 	
 	//Metodos
 	
@@ -108,6 +110,8 @@ public abstract class Actor {
 	public String toString() {
 		return "Actor [x=" + x + ", y=" + y + ", ancho=" + ancho + ", alto=" + alto + ", img=" + img + "]";
 	}
+	
+	
 	
 	
 
