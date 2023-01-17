@@ -44,6 +44,11 @@ public abstract class Actor {
 	 */
 	public abstract void actua ();
 
+	/*
+	 * 
+	 */
+	public void colisionaCon(Actor a) {
+	}
 	
 	/**
 	 * @return the x
@@ -111,9 +116,5 @@ public abstract class Actor {
 		return "Actor [x=" + x + ", y=" + y + ", ancho=" + ancho + ", alto=" + alto + ", img=" + img + "]";
 	}
 	
-	
-	
-	
 
-	
 }

@@ -12,7 +12,7 @@ public class Nave extends Actor {
 	// Propiedades que indican si se está produciendo un movimiento en una dirección
 	private boolean izquierda = false, derecha = false;
 	// Velocidad de la nave, expresada en píxeles por cada frame
-	public static int VELOCIDAD = 5;
+	public static int VELOCIDAD = 8;
 
 	//Métodos del objeto
 

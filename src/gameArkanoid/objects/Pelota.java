@@ -3,12 +3,14 @@ package gameArkanoid.objects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.JOptionPane;
+
 import gameArkanoid.Arkanoid;
 
 public class Pelota extends Actor{
 	//Propiedades del objeto
 
-	private int alto, ancho, velX = -5, velY = -5;
+	private int alto, ancho;
 	public static String BALL_IMAGE = "ball.img";
 
 	@Override
@@ -20,19 +22,39 @@ public class Pelota extends Actor{
 	@Override
 	public void actua() {
 		//Configuramos el movimiento horizontal.
-		this.x += this.velX;
+		this.x += this.velocidadX;
 		//Añadimos colisiones a las paredes
 		if (this.x < 0 || (this.x + this.ancho) > Arkanoid.getInstance().getCanvas().getWidth()) {
-			this.velX = - this.velX;
+			this.velocidadX = - this.velocidadX;
 		}
 		
 		//Configuramos el movimiento horizontal.
-		this.y += this.velY;
+		this.y += this.velocidadY;
 		//Añadimos colisiones a las paredes
-		if (this.y < 0 || (this.y + this.alto) > Arkanoid.getInstance().getCanvas().getHeight()) {
-			this.velY = - this.velY;
+		if (this.y < 0) {
+			this.velocidadY = - this.velocidadY;
 		}
 		
+		// Si el disparo se pierde por el borde inferior, elimino el actor del juego
+		if ((this.y + this.alto) > Arkanoid.getInstance().getCanvas().getHeight()) {
+			Arkanoid.getInstance().eliminaActor(this);
+			JOptionPane.showMessageDialog(null, "¡Has perdido!");
+			System.exit(0);
+			
+		}
+		
+	}
+	
+	/*
+	 * Rebota al colisionar
+	 */
+	public void colisionaCon(Actor a) {
+		super.colisionaCon(a);
+		// Si colisionamos con monstruo, eliminamos el disparo
+		if (a instanceof Ladrillo || a instanceof Nave) {
+			this.velocidadY = - this.velocidadY;
+		}
+		this.y += this.velocidadY;
 	}
 
 	/**
@@ -50,6 +72,8 @@ public class Pelota extends Actor{
 		super(x, y, img);
 		ancho = 15;
 		alto = 15;
+		velocidadX = -5;
+		velocidadY = -5;
 	}
 
 	/**
