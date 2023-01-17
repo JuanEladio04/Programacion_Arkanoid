@@ -2,6 +2,7 @@ package gameArkanoid;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -29,12 +30,23 @@ public class Arkanoid {
 	private static List<Actor> actores = creaActores(); //Creamos los actores
 	private static MyCanvas canvas = new MyCanvas(actores); //Creamos un objeto mi canvas para poder pintar nuestros actores en el juego
 	private static Arkanoid instance = null;
-
-	/**
-	 * Método main
-	 * @param args
+	private List<Actor> actoresParaEliminar = new ArrayList<Actor>();
+	
+	/*
+	 * Necesario para el Singletone
 	 */
-	public static void main(String[] args) {
+	public static Arkanoid getInstance () {
+		if (instance == null) { // Si no está inicializada, se inicializa
+			instance = new Arkanoid();
+		}
+		return instance;
+	}
+	
+	
+	/*
+	 * Meotod principal del juego
+	 */
+	public Arkanoid() {
 		ventana = new JFrame("Arkanoid"); //Creamos la ventana.
 		ventana.setBounds(0, 0, 475, 700); //Damos los valores a la ventana.
 		ventana.getContentPane().setLayout(new BorderLayout()); // Asignamos un layout a la ventana para poder colocar objetos encima.
@@ -77,32 +89,42 @@ public class Arkanoid {
 				}
 			});
 		//Iniciamos el juego
-		game();
 	}	
 	
-	/*
-	 * Necesario para el Singletone
+	/**
+	 * Método main
+	 * @param args
 	 */
-	public static Arkanoid getInstance () {
-		if (instance == null) { // Si no está inicializada, se inicializa
-			instance = new Arkanoid();
-		}
-		return instance;
+	public static void main(String[] args) {
+		Arkanoid.getInstance().game();
 	}
 	
 	/*
 	 * Metodo para inciar el juego
 	 */
-	public static void game() {
+	public void game() {
 		do {
+			//Hacemos que el elemento canva tenga el focus para que podamos utilizar el teclado directamente sin necesidad de hacer click.
+				if (ventana.getFocusOwner() != null && 
+				!ventana.getFocusOwner().equals(canvas)) {
+					canvas.requestFocus();
+				}
+				
 			long millisAntesDeProcesarEscena = new Date().getTime();
 			//Redibujamos la escena tantas veces como indique la variable fps
-			canvas.repaint();
+			canvas.paintScene();
 			
 			//Recorremos los diferentes antores para que cada uno de ellos actúe.
 			for (Actor a : actores) {
 				a.actua();
 			}
+			
+			// Tras hacer que cada actor actúe y antes de agregar y eliminar actores, detecto colisiones
+			detectaColisiones();
+			
+			// Acualizo los actores, eliminando los que ya no se quieren
+			actualizaActores();
+			
 			// Calculo los millis que debemos parar el proceso.
 			long millisDespuesDeProcesarEscena = new Date().getTime();
 			int millisDeProcesamientoDeEscena = (int) (millisDespuesDeProcesarEscena - millisAntesDeProcesarEscena);
@@ -114,9 +136,23 @@ public class Arkanoid {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
 		} while (true);
 		
+	}
+	
+	public void eliminaActor (Actor a) {
+		this.actoresParaEliminar.add(a);
+	}
+	
+	/**
+	 * Elimina los que corresponden
+	 */
+	private void actualizaActores () {
+		// Elimino los actores que se deben eliminar
+		for (Actor a : this.actoresParaEliminar) {
+			this.actores.remove(a);
+		}
+		this.actoresParaEliminar.clear(); // Limpio la lista de actores a eliminar, ya los he eliminado
 	}
 	
 	public static List<Actor> creaActores() { //Método para crear los diferentes actores.
@@ -131,9 +167,7 @@ public class Arkanoid {
 		
 		//Luego creamos los diferentes ladrillos del juego
 		List<Ladrillo> ladrillos = creaYColocaLadrillos();
-		for (Ladrillo brick : ladrillos) {
-			actores.add(brick);
-		}
+		actores.addAll(ladrillos);
 		
 		return actores;
 	}
@@ -141,27 +175,17 @@ public class Arkanoid {
 	//Creamos los ladrillos
 	public static List<Ladrillo> creaYColocaLadrillos() {
 		List<Ladrillo> bricks = new ArrayList<Ladrillo>();
-		int y = 10, x = 10;
+		int y = 30, x = 10;
+		String colors[] = new String[]{"red", "orange", "yellow", "green", "cyan", "magenta"};
 
-		for(int  i = 0, j = 0; i < 72; i++, j++) {
-			if(j == 12) { //Creamos un if que haga que cada 12 bloques bajemos una posición
-				y = bricks.get(i - 1).getY() + bricks.get(i - 1).getAlto();
-				x = 10; //Devolvemos la x a su posición inicial
-				j = 0;
-			}
-			else { //En caso de la que sea el primer ladrillo no aplicaremos el incremento a la x.
-				if ( i != 0) x = ((bricks.get(i - 1).getX()) + bricks.get(i - 1).getAncho()) + 7;
-			}
-
-			if(i == 0) { //Configuramos el primer ladrillo
-				Ladrillo brick = new Ladrillo(x, y, Ladrillo.BRICK_IMAGE);
+		for (int i = 0; i < 6; i++) { //Bucle que crea cada fila de ladrillos
+			for (int j = 0; j < 12; j++) { //con este bucle creamos cada ladrillo.
+				Ladrillo brick = new Ladrillo(x, y, Ladrillo.BRICK_IMAGE, colors[i]);
 				bricks.add(brick);
+				x = x + 37; //Creamos un incremento que solo esté presente en cada fila.
 			}
-			else { // Configuramos el resto de ladrillos
-				Ladrillo brick = new Ladrillo(x, y, Ladrillo.BRICK_IMAGE);
-				bricks.add(brick);
-			}
-			//Damos color a los ladrillos
+			x = 10; //Reiniciamos la x.
+			y = y + 30; //Creamos un incremento para la y.
 		}
 		return bricks;
 	}
@@ -185,5 +209,29 @@ public class Arkanoid {
 	public MyCanvas getCanvas() {
 		return canvas;
 	}
-
+	
+	/**
+	 * Detecta colisiones entre actores e informa a los dos
+	 */
+	
+	private  void detectaColisiones() {
+		for (Actor actor1 : this.actores) {
+			// Creo un rectángulo para este actor.
+			Rectangle rect1 = new Rectangle(actor1.getX(), actor1.getY(), actor1.getAncho(), actor1.getAlto());
+			// Compruebo un actor con cualquier otro actor
+			for (Actor actor2 : this.actores) {
+				// Evito comparar un actor consigo mismo, ya que eso siempre provocaría una colisión y no tiene sentido
+				if (!actor1.equals(actor2)) {
+					// Formo el rectángulo del actor 2
+					Rectangle rect2 = new Rectangle(actor2.getX(), actor2.getY(), actor2.getAncho(), actor2.getAlto());
+					// Si los dos rectángulos tienen alguna intersección, notifico una colisión en los dos actores
+					if (rect1.intersects(rect2)) {
+						actor1.colisionaCon(actor2); // El actor 1 colisiona con el actor 2
+						actor2.colisionaCon(actor1); // El actor 2 colisiona con el actor 1
+					}
+				}
+			}
+		}
+	}
+	
 }
