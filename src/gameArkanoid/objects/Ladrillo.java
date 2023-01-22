@@ -8,40 +8,40 @@ import gameArkanoid.Arkanoid;
 
 public class Ladrillo extends Actor {
 	//Propiedades del objeto
-	public static String BRICK_IMAGE = "brick.png";
 	public String color;
 	
 	//Metodos del objeto
 
 	@Override
 	public void paint(Graphics g) {
-		alto = 20;
-		ancho = 30;
-		
-		if (color == "red") {
-			g.setColor(Color.RED);
-			g.fillRect(this.x, this.y, ancho, alto);	
-		}
-		if (color == "orange") {
-			g.setColor(Color.ORANGE);
-			g.fillRect(this.x, this.y, ancho, alto);	
-		}
-		if (color == "yellow") {
-			g.setColor(Color.YELLOW);
-			g.fillRect(this.x, this.y, ancho, alto);
-		}
-		if (color == "green") {
-			g.setColor(Color.GREEN);
-			g.fillRect(this.x, this.y, ancho, alto);	
-		}
-		if (color == "cyan") {
-			g.setColor(Color.CYAN);
-			g.fillRect(this.x, this.y, ancho, alto);	
-		}
-		if (color == "magenta") {
-			g.setColor(Color.MAGENTA);
-			g.fillRect(this.x, this.y, ancho, alto);	
-		}
+//		alto = 20;
+//		ancho = 30;
+//		
+//		if (color == "red") {
+//			g.setColor(Color.RED);
+//			g.fillRect(this.x, this.y, ancho, alto);	
+//		}
+//		if (color == "orange") {
+//			g.setColor(Color.ORANGE);
+//			g.fillRect(this.x, this.y, ancho, alto);	
+//		}
+//		if (color == "yellow") {
+//			g.setColor(Color.YELLOW);
+//			g.fillRect(this.x, this.y, ancho, alto);
+//		}
+//		if (color == "green") {
+//			g.setColor(Color.GREEN);
+//			g.fillRect(this.x, this.y, ancho, alto);	
+//		}
+//		if (color == "cyan") {
+//			g.setColor(Color.CYAN);
+//			g.fillRect(this.x, this.y, ancho, alto);	
+//		}
+//		if (color == "magenta") {
+//			g.setColor(Color.MAGENTA);
+//			g.fillRect(this.x, this.y, ancho, alto);	
+//		}
+		g.drawImage(this.img, this.x, this.y, null);
 	}
 	
 	/**
@@ -71,23 +71,8 @@ public class Ladrillo extends Actor {
 	/*
 	 * Constructor avanzado
 	 */
-	public Ladrillo(int x, int y, String BRICK_IMAGE, String color) {
-		super(x, y , BRICK_IMAGE);
-		this.color = color;
-	}
-
-	/**
-	 * @return the bRICK_IMAGE
-	 */
-	public static String getBRICK_IMAGE() {
-		return BRICK_IMAGE;
-	}
-
-	/**
-	 * @param bRICK_IMAGE the bRICK_IMAGE to set
-	 */
-	public static void setBRICK_IMAGE(String bRICK_IMAGE) {
-		BRICK_IMAGE = bRICK_IMAGE;
+	public Ladrillo(int x, int y) {
+		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.BRICK_IMAGE));
 	}
 
 	/**

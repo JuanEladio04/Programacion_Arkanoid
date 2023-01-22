@@ -1,12 +1,13 @@
 package gameArkanoid.objects;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public abstract class Actor {
 	//Propiedades
 	protected int x, y; //Ubicación del actor en la pantalla
 	protected int ancho = 30, alto = 30; // Lo que ocupa el actor en la pantalla
-	protected String img; // Imagen del actor
+	protected BufferedImage img;// Imagen del actor
 	protected int velocidadX = 0; // Velocidades en cada eje
 	protected int velocidadY = 0;
 	
@@ -26,18 +27,20 @@ public abstract class Actor {
 	 * @param alto
 	 * @param img
 	 */
-	public Actor(int x, int y, String img) {
+	public Actor(int x, int y, BufferedImage img) {
 		super();
 		this.x = x;
 		this.y = y;
-		this.img = img;
+		this.setImg(img);
 	}
 	
 	/**
 	 * 
 	 * @param g
 	 */
-	public abstract void paint(Graphics g); 
+	public void paint(Graphics g) {
+		g.drawImage(this.img, this.x, this.y, null);
+	}
 
 	/**
 	 * 
@@ -101,14 +104,16 @@ public abstract class Actor {
 	/**
 	 * @return the img
 	 */
-	public String getImg() {
+	public BufferedImage getImg() {
 		return img;
 	}
 	/**
 	 * @param img the img to set
 	 */
-	public void setImg(String img) {
+	public void setImg(BufferedImage img) {
 		this.img = img;
+		this.ancho = this.img.getWidth();
+		this.alto = this.img.getHeight();
 	}
 	
 	@Override

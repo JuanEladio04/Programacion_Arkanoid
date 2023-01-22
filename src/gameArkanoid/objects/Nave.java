@@ -1,14 +1,11 @@
 package gameArkanoid.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-
 import gameArkanoid.Arkanoid;
 
 public class Nave extends Actor {
 	//Propiedades del objeto
-	public static String SHIP_IMAGE = "ship.png";
 	// Propiedades que indican si se está produciendo un movimiento en una dirección
 	private boolean izquierda = false, derecha = false;
 	// Velocidad de la nave, expresada en píxeles por cada frame
@@ -21,8 +18,7 @@ public class Nave extends Actor {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(Color.CYAN);
-		g.fillRect(this.x, this.y, this.ancho, this.alto);
+		g.drawImage(this.img, this.x, this.y, null);
 	}
 
 	@Override
@@ -106,8 +102,8 @@ public class Nave extends Actor {
 	 * @param y
 	 * @param img
 	 */
-	public Nave(int x, int y, String img) {
-		super(x, y, img);
+	public Nave(int x, int y) {
+		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.SHIP_IMAGE));
 		alto = 20;
 		ancho = 80;
 	}

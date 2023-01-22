@@ -15,8 +15,7 @@ public class Pelota extends Actor{
 
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillOval(this.x, this.y, this.ancho, this.alto);		
+		g.drawImage(this.img, this.x, this.y, null);	
 	}
 
 	@Override
@@ -68,8 +67,8 @@ public class Pelota extends Actor{
 	 * @param alto
 	 * @param ancho
 	 */
-	public Pelota(int x, int y, String img) {
-		super(x, y, img);
+	public Pelota(int x, int y) {
+		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.BALL_IMAGE));
 		ancho = 15;
 		alto = 15;
 		velocidadX = -5;

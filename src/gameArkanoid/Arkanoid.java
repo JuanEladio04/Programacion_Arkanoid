@@ -159,10 +159,10 @@ public class Arkanoid {
 		List<Actor> actores = new ArrayList<Actor>();
 		
 		//Primero debemos añadir al jugador a la lista.
-		player = new Nave(260, 500, Nave.SHIP_IMAGE);
+			player = new Nave(260, 500);
 		actores.add(player);
 		//Añadimos la pelota
-		Pelota ball = new Pelota(200, player.getY() - 50, Pelota.BALL_IMAGE);
+		Pelota ball = new Pelota(200, player.getY() - 50);
 		actores.add(ball);
 		
 		//Luego creamos los diferentes ladrillos del juego
@@ -180,7 +180,7 @@ public class Arkanoid {
 
 		for (int i = 0; i < 6; i++) { //Bucle que crea cada fila de ladrillos
 			for (int j = 0; j < 12; j++) { //con este bucle creamos cada ladrillo.
-				Ladrillo brick = new Ladrillo(x, y, Ladrillo.BRICK_IMAGE, colors[i]);
+				Ladrillo brick = new Ladrillo(x, y);
 				bricks.add(brick);
 				x = x + 37; //Creamos un incremento que solo esté presente en cada fila.
 			}
