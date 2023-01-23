@@ -14,8 +14,8 @@ public class Ladrillo extends Actor {
 
 	@Override
 	public void paint(Graphics g) {
-//		alto = 20;
-//		ancho = 30;
+		alto = 20;
+		ancho = 30;
 //		
 //		if (color == "red") {
 //			g.setColor(Color.RED);

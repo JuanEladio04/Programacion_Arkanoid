@@ -12,14 +12,26 @@ public class Nave extends Actor {
 	public static int VELOCIDAD = 8;
 
 	//Métodos del objeto
+	
+	
+	/**
+	 * Constructor por defecto "default constructor"
+	 */
+	public Nave() {
+		super();
+	}
 
 	/**
-	 * Esto nos servira para pintar el jugador en la escena y determinar su comportamiento.
+	 * Constructor que inicializa las propiedades del objeto
+	 * @param x
+	 * @param y
+	 * @param img
 	 */
-	@Override
-	public void paint(Graphics g) {
-		g.drawImage(this.img, this.x, this.y, null);
+	public Nave(int x, int y) {
+		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.SHIP_IMAGE));
+
 	}
+
 
 	@Override
 	public void actua() {
@@ -50,16 +62,6 @@ public class Nave extends Actor {
 		if (this.x < 0) {
 			this.x = 0;
 		}
-
-		// Compruebo si el jugador sale por abajo
-		if (this.y > (canvas.getHeight() - this.alto)) {
-			this.y = canvas.getHeight() - this.alto;
-		}
-
-		// Compruebo si el jugador sale por arriba
-		if (this.y < 0) {
-			this.y = 0;
-		}
 	}
 
 
@@ -87,25 +89,6 @@ public class Nave extends Actor {
 		case KeyEvent.VK_RIGHT:
 			derecha = false; break;
 		}
-	}
-	
-	/**
-	 * Constructor por defecto "default constructor"
-	 */
-	public Nave() {
-		super();
-	}
-
-	/**
-	 * Constructor que inicializa las propiedades del objeto
-	 * @param x
-	 * @param y
-	 * @param img
-	 */
-	public Nave(int x, int y) {
-		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.SHIP_IMAGE));
-		alto = 20;
-		ancho = 80;
 	}
 
 	/**

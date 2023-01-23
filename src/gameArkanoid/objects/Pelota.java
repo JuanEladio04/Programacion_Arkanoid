@@ -11,7 +11,27 @@ public class Pelota extends Actor{
 	//Propiedades del objeto
 
 	private int alto, ancho;
-	public static String BALL_IMAGE = "ball.img";
+	
+
+	/**
+	 * Constructor por defecto
+	 */
+	public Pelota() {
+		super();
+	}
+
+	/**
+	 * Costructor avanzado
+	 * @param alto
+	 * @param ancho
+	 */
+	public Pelota(int x, int y) {
+		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.BALL_IMAGE));
+		ancho = 15;
+		alto = 15;
+		this.velocidadX = -5;
+		this.velocidadY = -5;
+	}
 
 	@Override
 	public void paint(Graphics g) {
@@ -54,25 +74,6 @@ public class Pelota extends Actor{
 			this.velocidadY = - this.velocidadY;
 		}
 		this.y += this.velocidadY;
-	}
-
-	/**
-	 * Constructor por defecto
-	 */
-	public Pelota() {
-		super();
-	}
-
-	/**
-	 * @param alto
-	 * @param ancho
-	 */
-	public Pelota(int x, int y) {
-		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.BALL_IMAGE));
-		ancho = 15;
-		alto = 15;
-		velocidadX = -5;
-		velocidadY = -5;
 	}
 
 	/**

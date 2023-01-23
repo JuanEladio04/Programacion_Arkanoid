@@ -161,6 +161,7 @@ public class Arkanoid {
 		//Primero debemos añadir al jugador a la lista.
 			player = new Nave(260, 500);
 		actores.add(player);
+		
 		//Añadimos la pelota
 		Pelota ball = new Pelota(200, player.getY() - 50);
 		actores.add(ball);
@@ -176,7 +177,7 @@ public class Arkanoid {
 	public static List<Ladrillo> creaYColocaLadrillos() {
 		List<Ladrillo> bricks = new ArrayList<Ladrillo>();
 		int y = 30, x = 10;
-		String colors[] = new String[]{"red", "orange", "yellow", "green", "cyan", "magenta"};
+//		String colors[] = new String[]{"red", "orange", "yellow", "green", "cyan", "magenta"};
 
 		for (int i = 0; i < 6; i++) { //Bucle que crea cada fila de ladrillos
 			for (int j = 0; j < 12; j++) { //con este bucle creamos cada ladrillo.

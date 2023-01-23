@@ -59,7 +59,7 @@ public class ImagesCache {
 	public BufferedImage getImagen(String nombre) {
 		BufferedImage img = sprites.get(nombre);
 		if (img == null) {
-			img = cargarImagen("resources/images/" + nombre);
+			img = cargarImagen("../resources/images/" + nombre);
 			sprites.put(nombre,img);
 		}
 		return img;
