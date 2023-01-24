@@ -1,32 +1,43 @@
 package gameArkanoid.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-
 import gameArkanoid.Arkanoid;
 
 public class Nave extends Actor {
 	//Propiedades del objeto
-	public static String SHIP_IMAGE = "ship.png";
 	// Propiedades que indican si se está produciendo un movimiento en una dirección
 	private boolean izquierda = false, derecha = false;
 	// Velocidad de la nave, expresada en píxeles por cada frame
 	public static int VELOCIDAD = 8;
 
 	//Métodos del objeto
+	
+	
+	/**
+	 * Constructor por defecto "default constructor"
+	 */
+	public Nave() {
+		super();
+	}
 
 	/**
-	 * Esto nos servira para pintar el jugador en la escena y determinar su comportamiento.
+	 * Constructor que inicializa las propiedades del objeto
+	 * @param x
+	 * @param y
+	 * @param img
 	 */
-	@Override
-	public void paint(Graphics g) {
-		g.setColor(Color.CYAN);
-		g.fillRect(this.x, this.y, this.ancho, this.alto);
+	public Nave(int x, int y) {
+		super(x, y);
+		this.alto = 30;
+		this.ancho = 30;
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(ResourcesCache.SHIP_IMAGE));
 	}
+
 
 	@Override
 	public void actua() {
+		super.actua();
 		// Compruebo las variables booleanas que determinan el movimiento
 		if (izquierda) this.x -= VELOCIDAD;
 		if (derecha) this.x += VELOCIDAD;
@@ -53,16 +64,6 @@ public class Nave extends Actor {
 		// Compruebo si el jugador sale por la izquierda
 		if (this.x < 0) {
 			this.x = 0;
-		}
-
-		// Compruebo si el jugador sale por abajo
-		if (this.y > (canvas.getHeight() - this.alto)) {
-			this.y = canvas.getHeight() - this.alto;
-		}
-
-		// Compruebo si el jugador sale por arriba
-		if (this.y < 0) {
-			this.y = 0;
 		}
 	}
 
@@ -92,31 +93,12 @@ public class Nave extends Actor {
 			derecha = false; break;
 		}
 	}
-	
-	/**
-	 * Constructor por defecto "default constructor"
-	 */
-	public Nave() {
-		super();
-	}
-
-	/**
-	 * Constructor que inicializa las propiedades del objeto
-	 * @param x
-	 * @param y
-	 * @param img
-	 */
-	public Nave(int x, int y, String img) {
-		super(x, y, img);
-		alto = 20;
-		ancho = 80;
-	}
-
 	/**
 	 * Obtención de un String con todos los datos de un objeto Nave
+	 * @Override
 	 */
 	public String toString() {
-		return "Nave [getX()=" + getX() + ", getY()=" + getY() + ", getImg()=" + getImg() + "]";
-	}
-
+		return "Nave [izquierda=" + izquierda + ", derecha=" + derecha + "]";
+	}	
+	
 }

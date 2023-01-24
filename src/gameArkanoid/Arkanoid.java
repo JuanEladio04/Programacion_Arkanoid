@@ -21,15 +21,17 @@ import gameArkanoid.objects.Ladrillo;
 import gameArkanoid.objects.MyCanvas;
 import gameArkanoid.objects.Nave;
 import gameArkanoid.objects.Pelota;
+import gameArkanoid.objects.ResourcesCache;
 
 public class Arkanoid {
 	private static int FPS = 60;
 	private static JFrame ventana = null;
 	private static int millisPorCadaFrame = 1000 / FPS; // Creamos una variable para calcular los millis por cada frame
 	private static Nave player = null;
-	private static List<Actor> actores = creaActores(); //Creamos los actores
+	private static List<Actor> actores = new ArrayList(); //Creamos los actores
 	private static MyCanvas canvas = new MyCanvas(actores); //Creamos un objeto mi canvas para poder pintar nuestros actores en el juego
 	private static Arkanoid instance = null;
+	private List<Actor> actoresParaIncorporar = new ArrayList<Actor>();
 	private List<Actor> actoresParaEliminar = new ArrayList<Actor>();
 	
 	/*
@@ -42,7 +44,6 @@ public class Arkanoid {
 		return instance;
 	}
 	
-	
 	/*
 	 * Meotod principal del juego
 	 */
@@ -50,6 +51,9 @@ public class Arkanoid {
 		ventana = new JFrame("Arkanoid"); //Creamos la ventana.
 		ventana.setBounds(0, 0, 475, 700); //Damos los valores a la ventana.
 		ventana.getContentPane().setLayout(new BorderLayout()); // Asignamos un layout a la ventana para poder colocar objetos encima.
+		
+		actores = creaActores();
+		canvas = new MyCanvas(actores);
 		
 		canvas.addMouseMotionListener(new MouseAdapter() {
 			@Override
@@ -96,6 +100,7 @@ public class Arkanoid {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		ResourcesCache.getInstance().cargarRecursosEnMemoria();
 		Arkanoid.getInstance().game();
 	}
 	
@@ -140,6 +145,14 @@ public class Arkanoid {
 		
 	}
 	
+	/**
+	 * Método llamado para incorporar nuevos actores
+	 * @param a
+	 */
+	public void incorporaNuevoActor (Actor a) {
+		this.actoresParaIncorporar.add(a);
+	}
+	
 	public void eliminaActor (Actor a) {
 		this.actoresParaEliminar.add(a);
 	}
@@ -159,10 +172,11 @@ public class Arkanoid {
 		List<Actor> actores = new ArrayList<Actor>();
 		
 		//Primero debemos añadir al jugador a la lista.
-		player = new Nave(260, 500, Nave.SHIP_IMAGE);
+			player = new Nave(260, 500);
 		actores.add(player);
+		
 		//Añadimos la pelota
-		Pelota ball = new Pelota(200, player.getY() - 50, Pelota.BALL_IMAGE);
+		Pelota ball = new Pelota(200, player.getY() - 50);
 		actores.add(ball);
 		
 		//Luego creamos los diferentes ladrillos del juego
@@ -176,11 +190,11 @@ public class Arkanoid {
 	public static List<Ladrillo> creaYColocaLadrillos() {
 		List<Ladrillo> bricks = new ArrayList<Ladrillo>();
 		int y = 30, x = 10;
-		String colors[] = new String[]{"red", "orange", "yellow", "green", "cyan", "magenta"};
+//		String colors[] = new String[]{"red", "orange", "yellow", "green", "cyan", "magenta"};
 
 		for (int i = 0; i < 6; i++) { //Bucle que crea cada fila de ladrillos
 			for (int j = 0; j < 12; j++) { //con este bucle creamos cada ladrillo.
-				Ladrillo brick = new Ladrillo(x, y, Ladrillo.BRICK_IMAGE, colors[i]);
+				Ladrillo brick = new Ladrillo(x, y);
 				bricks.add(brick);
 				x = x + 37; //Creamos un incremento que solo esté presente en cada fila.
 			}
@@ -213,7 +227,6 @@ public class Arkanoid {
 	/**
 	 * Detecta colisiones entre actores e informa a los dos
 	 */
-	
 	private  void detectaColisiones() {
 		for (Actor actor1 : this.actores) {
 			// Creo un rectángulo para este actor.

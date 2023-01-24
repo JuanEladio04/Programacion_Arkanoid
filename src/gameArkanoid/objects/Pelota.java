@@ -11,16 +11,39 @@ public class Pelota extends Actor{
 	//Propiedades del objeto
 
 	private int alto, ancho;
-	public static String BALL_IMAGE = "ball.img";
+	
+
+	/**
+	 * Constructor por defecto
+	 */
+	public Pelota() {
+		super();
+	}
+
+	/**
+	 * Costructor avanzado
+	 * @param ancho 
+	 * @param alto
+	 * @param ancho
+	 * @param alto 
+	 */
+	public Pelota(int x, int y) {
+		super(x, y);
+		this.ancho = 10;
+		this.alto = 10;
+		this.velocidadX = -5;
+		this.velocidadY = -5;
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(ResourcesCache.BALL_IMAGE));
+	}
 
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillOval(this.x, this.y, this.ancho, this.alto);		
+		g.drawImage(this.spriteActual, this.x, this.y, null);
 	}
 
 	@Override
 	public void actua() {
+		super.actua();
 		//Configuramos el movimiento horizontal.
 		this.x += this.velocidadX;
 		//Añadimos colisiones a las paredes
@@ -55,25 +78,6 @@ public class Pelota extends Actor{
 			this.velocidadY = - this.velocidadY;
 		}
 		this.y += this.velocidadY;
-	}
-
-	/**
-	 * Constructor por defecto
-	 */
-	public Pelota() {
-		super();
-	}
-
-	/**
-	 * @param alto
-	 * @param ancho
-	 */
-	public Pelota(int x, int y, String img) {
-		super(x, y, img);
-		ancho = 15;
-		alto = 15;
-		velocidadX = -5;
-		velocidadY = -5;
 	}
 
 	/**
