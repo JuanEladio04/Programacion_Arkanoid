@@ -28,13 +28,16 @@ public class Nave extends Actor {
 	 * @param img
 	 */
 	public Nave(int x, int y) {
-		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.SHIP_IMAGE));
-
+		super(x, y);
+		this.alto = 30;
+		this.ancho = 30;
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(ResourcesCache.SHIP_IMAGE));
 	}
 
 
 	@Override
 	public void actua() {
+		super.actua();
 		// Compruebo las variables booleanas que determinan el movimiento
 		if (izquierda) this.x -= VELOCIDAD;
 		if (derecha) this.x += VELOCIDAD;
@@ -90,12 +93,12 @@ public class Nave extends Actor {
 			derecha = false; break;
 		}
 	}
-
 	/**
 	 * Obtención de un String con todos los datos de un objeto Nave
+	 * @Override
 	 */
 	public String toString() {
-		return "Nave [getX()=" + getX() + ", getY()=" + getY() + ", getImg()=" + getImg() + "]";
-	}
-
+		return "Nave [izquierda=" + izquierda + ", derecha=" + derecha + "]";
+	}	
+	
 }

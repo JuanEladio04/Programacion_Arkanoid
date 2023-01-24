@@ -12,55 +12,6 @@ public class Ladrillo extends Actor {
 	
 	//Metodos del objeto
 
-	@Override
-	public void paint(Graphics g) {
-		alto = 20;
-		ancho = 30;
-//		
-//		if (color == "red") {
-//			g.setColor(Color.RED);
-//			g.fillRect(this.x, this.y, ancho, alto);	
-//		}
-//		if (color == "orange") {
-//			g.setColor(Color.ORANGE);
-//			g.fillRect(this.x, this.y, ancho, alto);	
-//		}
-//		if (color == "yellow") {
-//			g.setColor(Color.YELLOW);
-//			g.fillRect(this.x, this.y, ancho, alto);
-//		}
-//		if (color == "green") {
-//			g.setColor(Color.GREEN);
-//			g.fillRect(this.x, this.y, ancho, alto);	
-//		}
-//		if (color == "cyan") {
-//			g.setColor(Color.CYAN);
-//			g.fillRect(this.x, this.y, ancho, alto);	
-//		}
-//		if (color == "magenta") {
-//			g.setColor(Color.MAGENTA);
-//			g.fillRect(this.x, this.y, ancho, alto);	
-//		}
-		g.drawImage(this.img, this.x, this.y, null);
-	}
-	
-	/**
-	 * Este método elimina el ladrillo una vez la pelota colisiona con el.
-	 */
-	@Override
-	public void colisionaCon(Actor a) {
-		super.colisionaCon(a);
-		// Si colisionamos con un player o un disparo, eliminamos al monstruo
-		if (a instanceof Pelota || a instanceof Ladrillo) {
-			Arkanoid.getInstance().eliminaActor(this);
-		}
-	}
-
-	@Override
-	public void actua() {
-		
-	}
-
 	/**
 	 * Constructor por defecto
 	 */
@@ -72,7 +23,34 @@ public class Ladrillo extends Actor {
 	 * Constructor avanzado
 	 */
 	public Ladrillo(int x, int y) {
-		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.BRICK_IMAGE));
+		super(x, y);
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(ResourcesCache.BRICK_IMAGE));
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		alto = 20;
+		ancho = 30;
+		g.drawImage(this.spriteActual, this.x, this.y, null);
+	}
+	
+	/**
+	 * Este método elimina el ladrillo una vez la pelota colisiona con el.
+	 */
+	@Override
+	public void colisionaCon(Actor a) {
+		super.colisionaCon(a);
+		// Si colisionamos con un player o un disparo, eliminamos al monstruo
+		if (a instanceof Pelota || a instanceof Ladrillo) {
+			Arkanoid.getInstance().eliminaActor(this);
+			ResourcesCache.getInstance().playSonido("explosion.wav");
+			Arkanoid.getInstance().incorporaNuevoActor(new Explosion(this.x, this.y));
+		}
+	}
+
+	@Override
+	public void actua() {
+		super.actua();
 	}
 
 	/**
@@ -91,12 +69,7 @@ public class Ladrillo extends Actor {
 
 	@Override
 	public String toString() {
-		return "Ladrillo [x=" + x + ", y=" + y + ", ancho=" + ancho + ", alto=" + alto + ", img=" + img
-				+ ", velocidadX=" + velocidadX + ", velocidadY=" + velocidadY + ", getX()=" + getX() + ", getY()="
-				+ getY() + ", getAncho()=" + getAncho() + ", getAlto()=" + getAlto() + ", getImg()=" + getImg()
-				+ ", toString()=" + super.toString() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ "]";
+		return "Ladrillo [color=" + color + "]";
 	}
-
 	
 }

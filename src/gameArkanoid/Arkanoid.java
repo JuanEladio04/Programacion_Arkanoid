@@ -21,15 +21,17 @@ import gameArkanoid.objects.Ladrillo;
 import gameArkanoid.objects.MyCanvas;
 import gameArkanoid.objects.Nave;
 import gameArkanoid.objects.Pelota;
+import gameArkanoid.objects.ResourcesCache;
 
 public class Arkanoid {
 	private static int FPS = 60;
 	private static JFrame ventana = null;
 	private static int millisPorCadaFrame = 1000 / FPS; // Creamos una variable para calcular los millis por cada frame
 	private static Nave player = null;
-	private static List<Actor> actores = creaActores(); //Creamos los actores
+	private static List<Actor> actores = new ArrayList(); //Creamos los actores
 	private static MyCanvas canvas = new MyCanvas(actores); //Creamos un objeto mi canvas para poder pintar nuestros actores en el juego
 	private static Arkanoid instance = null;
+	private List<Actor> actoresParaIncorporar = new ArrayList<Actor>();
 	private List<Actor> actoresParaEliminar = new ArrayList<Actor>();
 	
 	/*
@@ -42,7 +44,6 @@ public class Arkanoid {
 		return instance;
 	}
 	
-	
 	/*
 	 * Meotod principal del juego
 	 */
@@ -50,6 +51,9 @@ public class Arkanoid {
 		ventana = new JFrame("Arkanoid"); //Creamos la ventana.
 		ventana.setBounds(0, 0, 475, 700); //Damos los valores a la ventana.
 		ventana.getContentPane().setLayout(new BorderLayout()); // Asignamos un layout a la ventana para poder colocar objetos encima.
+		
+		actores = creaActores();
+		canvas = new MyCanvas(actores);
 		
 		canvas.addMouseMotionListener(new MouseAdapter() {
 			@Override
@@ -96,6 +100,7 @@ public class Arkanoid {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		ResourcesCache.getInstance().cargarRecursosEnMemoria();
 		Arkanoid.getInstance().game();
 	}
 	
@@ -138,6 +143,14 @@ public class Arkanoid {
 			}
 		} while (true);
 		
+	}
+	
+	/**
+	 * Método llamado para incorporar nuevos actores
+	 * @param a
+	 */
+	public void incorporaNuevoActor (Actor a) {
+		this.actoresParaIncorporar.add(a);
 	}
 	
 	public void eliminaActor (Actor a) {
@@ -214,7 +227,6 @@ public class Arkanoid {
 	/**
 	 * Detecta colisiones entre actores e informa a los dos
 	 */
-	
 	private  void detectaColisiones() {
 		for (Actor actor1 : this.actores) {
 			// Creo un rectángulo para este actor.

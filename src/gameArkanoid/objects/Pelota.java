@@ -22,24 +22,28 @@ public class Pelota extends Actor{
 
 	/**
 	 * Costructor avanzado
+	 * @param ancho 
 	 * @param alto
 	 * @param ancho
+	 * @param alto 
 	 */
 	public Pelota(int x, int y) {
-		super(x, y, ImagesCache.getInstance().getImagen(ImagesCache.BALL_IMAGE));
-		ancho = 15;
-		alto = 15;
+		super(x, y);
+		this.ancho = 10;
+		this.alto = 10;
 		this.velocidadX = -5;
 		this.velocidadY = -5;
+		this.setSpriteActual(ResourcesCache.getInstance().getImagen(ResourcesCache.BALL_IMAGE));
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(this.img, this.x, this.y, null);	
+		g.drawImage(this.spriteActual, this.x, this.y, null);
 	}
 
 	@Override
 	public void actua() {
+		super.actua();
 		//Configuramos el movimiento horizontal.
 		this.x += this.velocidadX;
 		//Añadimos colisiones a las paredes

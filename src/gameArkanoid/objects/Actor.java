@@ -2,14 +2,22 @@ package gameArkanoid.objects;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Actor {
+public class Actor {
 	//Propiedades
 	protected int x, y; //Ubicación del actor en la pantalla
 	protected int ancho = 30, alto = 30; // Lo que ocupa el actor en la pantalla
-	protected BufferedImage img;// Imagen del actor
 	protected int velocidadX = 0; // Velocidades en cada eje
 	protected int velocidadY = 0;
+	protected BufferedImage spriteActual;
+	protected boolean marcadoParaEliminacion = false;
+	// Posibilidad de que el actor sea animado, a trav�s del siguiente array de sprites y las variables
+	// velocidadDeCambioDeSprite y unidadDeTiempo
+	protected List<BufferedImage> spritesDeAnimacion = new ArrayList<BufferedImage>();
+	protected int velocidadDeCambioDeSprite = 0;
+	private int unidadDeTiempo = 0;
 	
 	//Metodos
 	
@@ -27,11 +35,9 @@ public abstract class Actor {
 	 * @param alto
 	 * @param img
 	 */
-	public Actor(int x, int y, BufferedImage img) {
-		super();
+	public Actor(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.setImg(img);
 	}
 	
 	/**
@@ -39,13 +45,23 @@ public abstract class Actor {
 	 * @param g
 	 */
 	public void paint(Graphics g) {
-		g.drawImage(this.img, this.x, this.y, null);
+		g.drawImage(this.spriteActual, this.x, this.y, null);
 	}
 
 	/**
 	 * 
 	 */
-	public abstract void actua ();
+	public void actua(){
+		if (this.spritesDeAnimacion != null && this.spritesDeAnimacion.size() > 0) {
+			unidadDeTiempo++;
+			if (unidadDeTiempo % velocidadDeCambioDeSprite == 0){
+				unidadDeTiempo = 0;
+				int indiceSpriteActual = spritesDeAnimacion.indexOf(this.spriteActual);
+				int indiceSiguienteSprite = (indiceSpriteActual + 1) % spritesDeAnimacion.size();
+				this.spriteActual = spritesDeAnimacion.get(indiceSiguienteSprite);
+			}
+		}
+	};
 
 	/*
 	 * 
@@ -104,22 +120,38 @@ public abstract class Actor {
 	/**
 	 * @return the img
 	 */
-	public BufferedImage getImg() {
-		return img;
+	public BufferedImage getSpriteActual() {
+		return this.spriteActual;
 	}
 	/**
 	 * @param img the img to set
 	 */
-	public void setImg(BufferedImage img) {
-		this.img = img;
-		this.ancho = this.img.getWidth();
-		this.alto = this.img.getHeight();
+	public void setSpriteActual(BufferedImage spriteActual) {
+		this.spriteActual = spriteActual;
+		this.ancho = this.spriteActual.getWidth();
+		this.alto = this.spriteActual.getHeight();
 	}
 	
+	/**
+	 * @return the spritesDeAnimacion
+	 */
+	public List<BufferedImage> getSpritesDeAnimacion() {
+		return spritesDeAnimacion;
+	}
+
+	/**
+	 * @param spritesDeAnimacion the spritesDeAnimacion to set
+	 */
+	public void setSpritesDeAnimacion(List<BufferedImage> spritesDeAnimacion) {
+		this.spritesDeAnimacion = spritesDeAnimacion;
+	}
+
 	@Override
 	public String toString() {
-		return "Actor [x=" + x + ", y=" + y + ", ancho=" + ancho + ", alto=" + alto + ", img=" + img + "]";
+		return "Actor [x=" + x + ", y=" + y + ", ancho=" + ancho + ", alto=" + alto + ", velocidadX=" + velocidadX
+				+ ", velocidadY=" + velocidadY + ", spriteActual=" + spriteActual + ", marcadoParaEliminacion="
+				+ marcadoParaEliminacion + ", spritesDeAnimacion=" + spritesDeAnimacion + ", velocidadDeCambioDeSprite="
+				+ velocidadDeCambioDeSprite + ", unidadDeTiempo=" + unidadDeTiempo + "]";
 	}
-	
 
 }
