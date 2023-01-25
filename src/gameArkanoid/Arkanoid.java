@@ -161,6 +161,10 @@ public class Arkanoid {
 	 * Elimina los que corresponden
 	 */
 	private void actualizaActores () {
+		for (Actor a : this.actoresParaIncorporar) {
+			this.actores.add(a);
+		}
+		this.actoresParaIncorporar.clear(); // Limpio la lista de actores a incorporar, ya están incorporados
 		// Elimino los actores que se deben eliminar
 		for (Actor a : this.actoresParaEliminar) {
 			this.actores.remove(a);
